@@ -12,3 +12,9 @@ class MoviespiderItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+class Cili006Item(scrapy.Item):
+    magnet = scrapy.Field()
+    ed2k = scrapy.Field()
+    topic_id = scrapy.Field()
+    filename = scrapy.Field()
