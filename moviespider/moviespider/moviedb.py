@@ -18,7 +18,7 @@ class MovieDB:
         cur.execute("SELECT tbl_name FROM sqlite_master WHERE type='table'")
         res = cur.fetchall()
         for line in res:
-            if line['tbl_name'] == tblname:
+            if line == tblname:
                 return True
 
         return False
@@ -34,7 +34,15 @@ class MovieDB:
         cur.execute(sql)
 
     def addMovie_cili006(self, item):
-        #cur = self.conn.cursor()
+        cur = self.conn.cursor()
+        sql = "select id from cili006 where id = %s" % (item['topic_id'])
+        cur.execute(sql)
+        res = cur.fetchall()
+        print sql
+        print len(res)
+        if len(res) > 0:
+            return False
+
         #print item['filename'].__class__
         filename = item['filename'].replace("'", "''")
         magnet = item['magnet'].replace("'", "''")
@@ -43,3 +51,5 @@ class MovieDB:
         print sql
         self.conn.execute(sql)
         self.conn.commit()
+
+        return True
