@@ -5,6 +5,8 @@ from scrapy.selector import Selector
 
 from moviespider.items import Cili006Item
 
+from moviespider.moviedb import MovieDB
+
 class Cili006Spider(Spider):
     name = "cili006"
     allowed_domains = ["cili006.com"]
@@ -13,17 +15,17 @@ class Cili006Spider(Spider):
     ]
 
     def parse(self, response):
-        #with open('taobaomovie-movielist.html', 'w') as f:
-        #    f.write(response.body)
+        moviedb = MovieDB()
         sel = Selector(response)
         arrmovie = sel.xpath('/html/body/div[@class="middle-box"]/div[@class="w"]/dl[@class="list-item"]/dd')
         items = []
         for curmovie in arrmovie:
             print 'curmovie is ' + curmovie.extract()
             item = Cili006Item()
-            item['magnet'] = curmovie.xpath('text()').extract()
-            item['ed2k'] = curmovie.xpath('dd/text()').extract()
-            item['topic_id'] = curmovie.xpath('.//dd/@topic_id').extract()
-            item['filename'] = curmovie.xpath('.//dd/span[@class="b"]/a/text()').extract()
-            items.append(item)
+            item['magnet'] = curmovie.xpath('./@magnet')[0].extract()
+            item['ed2k'] = curmovie.xpath('./@ed2k')[0].extract()
+            item['topic_id'] = curmovie.xpath('./@topic_id')[0].extract()
+            item['filename'] = curmovie.xpath('./span[@class="b"]/a/text()')[0].extract()
+            moviedb.addMovie_cili006(item)
+            #items.append(item)
         return items
