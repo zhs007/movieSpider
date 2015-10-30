@@ -6,7 +6,7 @@ var server = require('webserver').create();
 var system = require('system');
 var fs = require('fs');
 
-var port = 8088;
+var port = 8089;
 var maxtime = 10 * 1000;
 
 var ServiceNode = {
@@ -73,14 +73,15 @@ var ServiceNode = {
     },
 
     onEnd: function () {
-        var doc = this.page.evaluate(function () {
-            return document;
-        });
+        //var doc = this.page.evaluate(function () {
+        //    return document;
+        //});
 
-        this.document = JSON.stringify(doc);
+        //this.document = JSON.stringify(doc);
 
         this.response.statusCode = 200;
-        this.response.write(JSON.stringify(document));
+        this.response.setHeader('Content-Type', 'text/html; charset=utf-8');
+        this.response.write(this.page.content);
         this.response.close();
 
         this.page.close();

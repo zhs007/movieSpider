@@ -14,14 +14,14 @@ setInterval(function() {
     var curts = (new Date()).getTime();
     if (curts - lastts > maxtime) {
 
-        var doc = page.evaluate(function () {
-            return document;
-        });
+        //var doc = page.evaluate(function () {
+        //    return document;
+        //});
 
         //console.log(JSON.stringify(doc));
 
         page.render('taobao.png');
-        fs.write('taobao.json', JSON.stringify(doc), 'w');
+        fs.write('taobao.output', page.content, 'w');
 
         phantom.exit();
     }

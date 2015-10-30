@@ -3,6 +3,8 @@
 from scrapy.spider import Spider
 from scrapy.selector import Selector
 
+import scrapy
+
 from moviespider.items import Cili006Item
 
 from moviespider.moviedb import MovieDB
@@ -14,10 +16,16 @@ class AcfunSpider(Spider):
         "http://www.acfun.tv/v/list97/index.htm"
     ]
 
+    def start_requests(self):
+        return [scrapy.FormRequest('http://localhost:8089',
+                                   formdata={'url': 'http://m.acfun.tv/list/#channel=97'},
+                                   callback=self.parse)]
+
     def parse(self, response):
-        moviedb = MovieDB()
+        #print response.body
+        #moviedb = MovieDB()
         sel = Selector(response)
-        arrmovie = sel.xpath('/html/body/div[@id="stage"]/div[@id="mainer"]/div[@id="mainer-inner"]/div[@id="area-a"]/div[@class="area-inner"]/div[@class="l"]/div[@id="block-content-channel"]/div[@class="mainer th-large"]')
+        arrmovie = sel.xpath('/html/body/div[@id="stage"]/section[@id="content"]/div[@class="mainer"]/div[@class="part"]/div[@class="unit"]')
         items = []
         for curmovie in arrmovie:
             print 'curmovie is ' + curmovie.extract()
