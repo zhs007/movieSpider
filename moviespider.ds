@@ -1,0 +1,10 @@
+
+// MAG磁力下载站
+struct MAGInfo{
+	primary int magid;					// 唯一标识
+	
+	string filename;					// filename
+	
+	string magnet;						// 磁力下载地址
+	string ed2k;						// ed2k下载地址
+};
