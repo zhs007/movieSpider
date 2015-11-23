@@ -1,0 +1,39 @@
+{
+  "name": "movieproc",
+  "version": "0.0.1",
+  "latest": "0.0.1",
+  "description": "movieproc",
+  "keywords": [
+    "movieproc"
+  ],
+  "preferGlobal": false,
+  "config": {
+    "publishtest": false
+  },
+  "homepage": "http://www.heysdk.com/",
+  "author": {
+    "name": "zhs007",
+    "email": "sssxueren@gmail.com",
+    "url": "http://www.heysdk.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zhs007/movieSpider"
+  },
+  "bugs": {
+    "url": "https://github.com/zhs007/movieSpider/issues",
+    "email": "sssxueren@gmail.com"
+  },
+  "directories": {
+    "bin": "./bin"
+  },
+  "main": "./bin/movieproc.js",
+  "scripts": {
+    "start": "node ./bin/movieproc.js"
+  },
+  "dependencies": {
+    "sqlite3": "*"
+  },
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}

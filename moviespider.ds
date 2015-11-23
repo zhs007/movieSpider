@@ -1,4 +1,9 @@
 
+// 豆瓣电影信息
+struct DBMovieInfo{
+	
+};
+
 // MAG磁力下载站
 struct MAGInfo{
 	primary int magid;					// 唯一标识
