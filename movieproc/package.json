@@ -32,7 +32,8 @@
     "start": "node ./bin/movieproc.js"
   },
   "dependencies": {
-    "sqlite3": "*"
+    "sqlite3": "*",
+    "async": "*"
   },
   "license": "MIT",
   "readmeFilename": "README.md"
