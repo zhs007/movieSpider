@@ -33,7 +33,8 @@
   },
   "dependencies": {
     "sqlite3": "*",
-    "async": "*"
+    "async": "*",
+    "mysql": "*"
   },
   "license": "MIT",
   "readmeFilename": "README.md"
