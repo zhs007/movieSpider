@@ -5,7 +5,7 @@ var fs = require("fs");
 var strPackage = fs.readFileSync('./package.json').toString();
 var pkg = JSON.parse(strPackage);
 
-var timestamp = Date().now();
+var timestamp = Date.now();
 
 exports.ver = pkg.version;
 
