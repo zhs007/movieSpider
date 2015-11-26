@@ -1,13 +1,20 @@
 extends base
 
 block content
-  .jumbotron
-    h2 登录
-    form
-      .form-group
-        label(for='inputName') 用户名
-        input#inputName.form-control(type='text', placeholder='用户名')
-      .form-group
-        label(for='inputPassword') 密码
-        input#inputPassword.form-control(type='password', placeholder='密码')
-      button.btn.btn-default(type='button', onclick='login()') 登录
+  table.table.table-striped
+    thead
+      tr
+        th 剧集名
+        th 磁力
+        th 电驴
+        th 小米路由
+        th 豆瓣
+    tbody
+      - for (var i = 0; i < lstmovie.length; ++i) {
+      tr
+        td #{lstmovie[i].cname} S#{lstmovie[i].season}E#{lstmovie[i].episode}
+        td <a target="_blank" href="#{lstmovie[i].magnet}">磁力下载</a>
+        td <a target="_blank" href="#{lstmovie[i].ed2k}">电驴下载</a>
+        td <a target="_blank" href="http://d.miwifi.com/d2r/?url=#{lstmovie[i].base64url}">下载到小米路由</a>
+        td <a target="_blank" href="http://www.douban.com/search?cat=1002&q=#{lstmovie[i].cname}">去豆瓣看看</a>
+      -}  

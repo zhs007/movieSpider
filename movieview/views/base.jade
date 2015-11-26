@@ -21,4 +21,18 @@ html(lang='zh-CN')
     script(src='js/jquery.min.js')
     // Include all compiled plugins (below), or include individual files as needed
     script(src='js/bootstrap.min.js')
+    script(src='js/base64.js')
     script(src='js/req.js')
+    script.
+      function d2r(elem) {
+      var href = elem.getAttribute("href")
+      href = "http://d.miwifi.com/d2r/?url=" +
+      Base64.encodeURI(href) + "&src=demo"
+      elem.setAttribute("href", href)
+      }
+      $(document).ready(function () {
+      //var arr = $("#d2r")
+      //for (var ii = 0; ii < arr.length; ++ii) {
+      //d2r(arr[ii])
+      //}
+      })

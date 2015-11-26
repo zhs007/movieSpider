@@ -2,6 +2,7 @@
 
 var config = require('../config');
 var moviesession = require('../base/moviesession');
+var moviemgr = require('../base/moviemgr');
 var express = require('express');
 var router = express.Router();
 
@@ -11,7 +12,9 @@ router.get('/', function(req, res, next) {
         return ;
     }
 
-    res.render('cili006', { title: config.appname });
+    moviemgr.getCili006(function (lst) {
+        res.render('cili006', { lstmovie: lst });
+    });
 });
 
 module.exports = router;

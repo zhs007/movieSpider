@@ -6,30 +6,53 @@ var util = require('util');
 class Cili006Info{
 
     constructor() {
-        this.pid = 0;
-        this.name = '';
+        this.id = 0;
+        this.filename = '';
+        this.magnet = '';
+        this.ed2k = '';
+        this.cname = '';
+        this.engname = '';
+        this.type = 0;
+        this.season = 0;
+        this.episode = 0;
+        this.movieid = 0;
     }
 };
 
-var mapAdmin = {};
+var lstCili006 = [];
 
-// callback(admininfo)
-function login(name, password, callback) {
-    let admininfo = new AdminInfo();
-    let slots3 = dbmgr.getDBClient('slots3');
-    let sql = util.format("select pid from playerinfo where playertype = 4 and name = '%s' and password = '%s'", name, password);
-    slots3.query(sql, function (err, rows, fields) {
+// callback(lst)
+function getCili006(callback) {
+    let movie = dbmgr.getDBClient('movie');
+    let sql = util.format("select * from cili006 where type = 1 order by id desc");
+    movie.query(sql, function (err, rows, fields) {
         if (err) {
             callback(undefined);
 
             return ;
         }
 
-        if (slots3.isValidResult(rows, 'pid')) {
-            admininfo.pid = rows[0].pid;
-            admininfo.name = name;
+        if (movie.isValidResult(rows, 'id')) {
+            for (let ii = 0; ii < rows.length; ++ii) {
+                let cm = new Cili006Info();
 
-            callback(admininfo);
+                cm.id = rows[ii].id;
+                cm.filename = rows[ii].filename;
+                cm.magnet = rows[ii].magnet;
+                cm.ed2k = rows[ii].ed2k;
+                cm.cname = rows[ii].cname;
+                cm.engname = rows[ii].engname;
+                cm.type = rows[ii].type;
+                cm.season = rows[ii].season;
+                cm.episode = rows[ii].episode;
+                cm.movieid = rows[ii].movieid;
+
+                cm.base64url = (new Buffer(cm.ed2k)).toString('base64');
+
+                lstCili006.push(cm);
+            }
+
+            callback(lstCili006);
 
             return ;
         }
@@ -40,4 +63,4 @@ function login(name, password, callback) {
     });
 }
 
-exports.login = login;
+exports.getCili006 = getCili006;

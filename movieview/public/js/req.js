@@ -22,3 +22,7 @@ function login() {
         onRet(data);
     });
 }
+
+function download2xiaomi(url) {
+    window.open("http://d.miwifi.com/d2r/?url=" + Base64.encodeURI(href));
+}
