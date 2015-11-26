@@ -1,0 +1,23 @@
+"use strict";
+
+var util = require('util');
+var fs = require("fs");
+var strPackage = fs.readFileSync('./package.json').toString();
+var pkg = JSON.parse(strPackage);
+
+var timestamp = Date().now();
+
+exports.ver = pkg.version;
+
+exports.service_port = 3700;
+exports.appname = 'movie-view';
+
+exports.log_path = util.format('./%s.log', timestamp);
+exports.logdev_path = util.format('./%s.dev.log', timestamp);
+
+exports.openLogDev = true;
+
+exports.db_host = '121.41.86.183';
+exports.db_user = 'zhs007';
+exports.db_pwd = 'zhs007';
+exports.db_name = 'movie';

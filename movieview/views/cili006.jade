@@ -1,0 +1,13 @@
+extends base
+
+block content
+  .jumbotron
+    h2 登录
+    form
+      .form-group
+        label(for='inputName') 用户名
+        input#inputName.form-control(type='text', placeholder='用户名')
+      .form-group
+        label(for='inputPassword') 密码
+        input#inputPassword.form-control(type='password', placeholder='密码')
+      button.btn.btn-default(type='button', onclick='login()') 登录
