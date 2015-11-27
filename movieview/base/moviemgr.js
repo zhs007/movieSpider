@@ -23,6 +23,7 @@ var lstCili006 = [];
 
 // callback(lst)
 function getCili006(callback) {
+    lstCili006 = [];
     let movie = dbmgr.getDBClient('movie');
     let sql = util.format("select * from cili006 where type = 1 order by id desc limit 0, 100");
     movie.query(sql, function (err, rows, fields) {
@@ -65,6 +66,7 @@ function getCili006(callback) {
 
 // callback(lst)
 function getCili006Ex(name, callback) {
+    lstCili006 = [];
     let movie = dbmgr.getDBClient('movie');
     let sql = util.format("select * from cili006 where type = 1 and cname = '%s' order by id desc limit 0, 100", name);
     movie.query(sql, function (err, rows, fields) {
