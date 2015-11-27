@@ -17,7 +17,7 @@ exports.logdev_path = util.format('./%s.dev.log', timestamp);
 
 exports.openLogDev = true;
 
-exports.db_host = '121.41.86.183';
-exports.db_user = 'zhs007';
-exports.db_pwd = 'zhs007';
+exports.db_host = '127.0.0.1';
+exports.db_user = 'root';
+exports.db_pwd = 'root';
 exports.db_name = 'movie';

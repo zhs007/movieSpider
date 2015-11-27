@@ -3,6 +3,7 @@
 var util = require('util');
 var sqlite3 = require('sqlite3').verbose();
 var dbmgr = require('./dbmgr');
+var config = require('../config');
 
 function validStr(str) {
     while (str.indexOf("'") >= 0) {
@@ -38,7 +39,7 @@ function proc() {
             }
         }
 
-        let sql = "select * from cili006";
+        let sql = "select * from cili006 order by id desc";
         db.all(sql, function (err, row) {
             if (err) {
                 console.log(util.format('all sql(%s) err is %j', sql, JSON.stringify(err)));
@@ -65,7 +66,7 @@ function proc() {
                     runsql.push(cursql);
                 }
 
-                dbmgr.newDBClient('movie', '121.41.86.183', 'zhs007', 'zhs007', 'movie', function () {
+                dbmgr.newDBClient('movie', config.db_host, config.db_user, config.db_pwd, config.db_name, function () {
                     let movie = dbmgr.getDBClient('movie');
                     movie.queryList(runsql, function () {
 
