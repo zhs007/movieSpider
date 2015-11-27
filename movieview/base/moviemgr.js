@@ -38,7 +38,7 @@ function getCili006(callback) {
                 let cm = new Cili006Info();
 
                 cm.id = rows[ii].id;
-                cm.filename = rows[ii].filename;
+                cm.filename = rows[ii].filename.replace('[MAG磁力下载站]', '');
                 cm.magnet = rows[ii].magnet;
                 cm.ed2k = rows[ii].ed2k;
                 cm.cname = rows[ii].cname;
@@ -81,7 +81,7 @@ function getCili006Ex(name, callback) {
                 let cm = new Cili006Info();
 
                 cm.id = rows[ii].id;
-                cm.filename = rows[ii].filename;
+                cm.filename = rows[ii].filename.replace('[MAG磁力下载站]', '');
                 cm.magnet = rows[ii].magnet;
                 cm.ed2k = rows[ii].ed2k;
                 cm.cname = rows[ii].cname;
