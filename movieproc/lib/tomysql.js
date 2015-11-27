@@ -29,7 +29,7 @@ function getInt(i) {
     return util.format('%d', i);
 }
 
-function proc() {
+function proc(next) {
     let db = new sqlite3.Database('../moviespider/movie.db', sqlite3.OPEN_READWRITE, function (err) {
         if (err) {
             if (err) {
@@ -69,7 +69,7 @@ function proc() {
                 dbmgr.newDBClient('movie', config.db_host, config.db_user, config.db_pwd, config.db_name, function () {
                     let movie = dbmgr.getDBClient('movie');
                     movie.queryList(runsql, function () {
-
+                        next();
                     });
                 });
             }

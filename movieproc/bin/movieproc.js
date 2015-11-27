@@ -1,8 +1,15 @@
 "use strict";
 
+var async = require('async');
 var cili006 = require('../lib/cili006');
 var tomysql = require('../lib/tomysql');
 
-cili006.proc();
+var arr = [cili006, tomysql];
 
-tomysql.proc();
+async.eachSeries(arr, function (mod, callback) {
+    mod.proc(function () {
+        callback();
+    });
+}, function (err) {
+
+});

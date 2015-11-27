@@ -1,6 +1,7 @@
 "use strict";
 
 var util = require('util');
+var async = require('async');
 var sqlite3 = require('sqlite3').verbose();
 
 var rSE = new RegExp('S[0-9][0-9]E[0-9][0-9]');
@@ -65,7 +66,7 @@ function procline(db, line) {
         let sql = util.format("update cili006 set cname = '%s', engname = '%s', season = %d, episode = %d, type = 1 where id = %d",
             validStr(cname), validStr(engname), s, e, line.id);
 
-        db.run(sql);
+        //db.run(sql);
 
         return sql;
     }
@@ -77,7 +78,7 @@ function procName() {
 
 }
 
-function proc() {
+function proc(next) {
     let db = new sqlite3.Database('../moviespider/movie.db', sqlite3.OPEN_READWRITE, function (err) {
         if (err) {
             if (err) {
@@ -104,6 +105,15 @@ function proc() {
                         runsql.push(cursql);
                     }
                 }
+
+                async.eachSeries(runsql, function (cursql, callback) {
+                    db.run(cursql, function () {
+                        callback();
+                    });
+
+                }, function (err) {
+                    next();
+                });
             }
         });
     });
