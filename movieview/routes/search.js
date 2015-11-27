@@ -13,7 +13,7 @@ router.get('/', function(req, res, next) {
     }
 
     if (req.query.hasOwnProperty('movie')) {
-        moviemgr.getCili006(function (lst) {
+        moviemgr.getCili006Ex(req.query.movie, function (lst) {
             res.render('cili006', { lstmovie: lst });
         });
     }
