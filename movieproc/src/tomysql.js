@@ -2,8 +2,6 @@
 
 var util = require('util');
 var sqlite3 = require('sqlite3').verbose();
-var dbmgr = require('./dbmgr');
-var config = require('../config');
 
 function validStr(str) {
     while (str.indexOf("'") >= 0) {
@@ -66,11 +64,9 @@ function proc(next) {
                     runsql.push(cursql);
                 }
 
-                dbmgr.newDBClient('movie', config.db_host, config.db_user, config.db_pwd, config.db_name, function () {
-                    let movie = dbmgr.getDBClient('movie');
-                    movie.queryList(runsql, function () {
-                        next();
-                    });
+                let movie = dbmgr.getDBClient('movie');
+                movie.queryList(runsql, function () {
+                    next();
                 });
             }
         });
