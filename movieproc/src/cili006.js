@@ -90,7 +90,7 @@ function proc(next) {
         if (row) {
             let runsql = [];
             for (let i = 0; i < row.length; ++i) {
-                console.log(util.format('row %d is %j', i, row[i]));
+                //console.log(util.format('row %d is %j', i, row[i]));
                 let cursql = procline(moviemgr.singleton, row[i]);
                 if (cursql != undefined) {
                     runsql.push(cursql);

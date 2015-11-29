@@ -38,6 +38,7 @@ class MovieDB:
         sql = "select id from cili006 where id = %s" % (item['topic_id'])
         cur.execute(sql)
         res = cur.fetchall()
+        cur.close()
         print sql
         print len(res)
         if len(res) > 0:
@@ -53,3 +54,11 @@ class MovieDB:
         self.conn.commit()
 
         return True
+
+    def getMovie_cili006search(self):
+        cur = self.conn.cursor()
+        sql = "select cname from cili006search where proc = 0"
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return res
