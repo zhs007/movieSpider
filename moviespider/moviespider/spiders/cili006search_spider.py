@@ -8,7 +8,7 @@ from moviespider.moviedb import MovieDB
 
 import scrapy
 
-class Cili006Spider(Spider):
+class Cili006SearchSpider(Spider):
     moviedb = MovieDB()
     name = "cili006search"
     allowed_domains = ["cili007.com"]
@@ -17,12 +17,13 @@ class Cili006Spider(Spider):
         lst = self.moviedb.getMovie_cili006search()
         lstreq = []
         for cur in lst:
-            lstreq.append(scrapy.FormRequest("http://cili007.com/?topic_title3=%s" % (cur[0]),
-                                   callback=self.parse))
+            req = scrapy.FormRequest("http://cili007.com/?topic_title3=%s" % (cur[0]), callback=self.parse)
+            req.__setattr__('cili006searchid', cur[1])
+            lstreq.append(req)
         return lstreq
 
     def parse(self, response):
-        print "OK!"
+        #print "OK!"
         sel = Selector(response)
         arrmovie = sel.xpath('/html/body/div[@class="middle-box"]/div[@class="w"]/dl[@class="list-item"]/dd')
         items = []
@@ -35,4 +36,5 @@ class Cili006Spider(Spider):
             item['filename'] = curmovie.xpath('./span[@class="b"]/a/text()')[0].extract()
             self.moviedb.addMovie_cili006(item)
             #items.append(item)
+        self.moviedb.procMovie_cili006search(response.request.cili006searchid)
         return items

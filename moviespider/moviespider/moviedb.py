@@ -49,7 +49,7 @@ class MovieDB:
         magnet = item['magnet'].replace("'", "''")
         ed2k = item['ed2k'].replace("'", "''")
         sql = "INSERT INTO cili006(id, filename, magnet, ed2k) values(%s, '%s', '%s', '%s')" % (item['topic_id'], filename, magnet, ed2k)
-        print sql
+        #print sql
         self.conn.execute(sql)
         self.conn.commit()
 
@@ -57,8 +57,14 @@ class MovieDB:
 
     def getMovie_cili006search(self):
         cur = self.conn.cursor()
-        sql = "select cname from cili006search where proc = 0"
+        sql = "select cname, id from cili006search where proc = 0"
         cur.execute(sql)
         res = cur.fetchall()
         cur.close()
         return res
+
+    def procMovie_cili006search(self, sid):
+        cur = self.conn.cursor()
+        sql = "update cili006search set proc = 1 where id = %d" % (sid)
+        cur.execute(sql)
+        cur.close()
