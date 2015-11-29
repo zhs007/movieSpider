@@ -29,8 +29,6 @@ function getInt(i) {
 }
 
 function proc(next) {
-    next();
-    return ;
     let db = new sqlite3.Database('../moviespider/movie.db', sqlite3.OPEN_READWRITE, function (err) {
         if (err) {
             if (err) {
