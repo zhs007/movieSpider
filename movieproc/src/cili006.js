@@ -2,7 +2,7 @@
 
 var util = require('util');
 var async = require('async');
-var sqlite3 = require('sqlite3').verbose();
+var moviemgr = require('../common/moviemgr');
 
 var rSE = new RegExp('S[0-9][0-9]E[0-9][0-9]');
 var rEp = new RegExp('Ep[0-9][0-9]');
@@ -79,43 +79,33 @@ function procName() {
 }
 
 function proc(next) {
-    let db = new sqlite3.Database('../moviespider/movie.db', sqlite3.OPEN_READWRITE, function (err) {
+    let sql = "select * from cili006 where type = 0 order by id asc";
+    moviemgr.singleton.all(sql, function (err, row) {
         if (err) {
-            if (err) {
-                console.log(util.format('open db err is %j', err));
+            console.log(util.format('all sql(%s) err is %j', sql, JSON.stringify(err)));
 
-                return ;
-            }
+            return ;
         }
 
-        let sql = "select * from cili006 where type = 0";
-        db.all(sql, function (err, row) {
-            if (err) {
-                console.log(util.format('all sql(%s) err is %j', sql, JSON.stringify(err)));
-
-                return ;
-            }
-
-            if (row) {
-                let runsql = [];
-                for (let i = 0; i < row.length; ++i) {
-                    console.log(util.format('row %d is %j', i, row[i]));
-                    let cursql = procline(db, row[i]);
-                    if (cursql != undefined) {
-                        runsql.push(cursql);
-                    }
+        if (row) {
+            let runsql = [];
+            for (let i = 0; i < row.length; ++i) {
+                console.log(util.format('row %d is %j', i, row[i]));
+                let cursql = procline(moviemgr.singleton, row[i]);
+                if (cursql != undefined) {
+                    runsql.push(cursql);
                 }
-
-                async.eachSeries(runsql, function (cursql, callback) {
-                    db.run(cursql, function () {
-                        callback();
-                    });
-
-                }, function (err) {
-                    next();
-                });
             }
-        });
+
+            async.eachSeries(runsql, function (cursql, callback) {
+                moviemgr.singleton.run(cursql, function () {
+                    callback();
+                });
+
+            }, function (err) {
+                next();
+            });
+        }
     });
 }
 

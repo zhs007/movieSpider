@@ -2,6 +2,7 @@
 
 var util = require('util');
 var sqlite3 = require('sqlite3').verbose();
+var dbmgr = require('../lib/dbmgr');
 
 function validStr(str) {
     while (str.indexOf("'") >= 0) {
@@ -28,6 +29,8 @@ function getInt(i) {
 }
 
 function proc(next) {
+    next();
+    return ;
     let db = new sqlite3.Database('../moviespider/movie.db', sqlite3.OPEN_READWRITE, function (err) {
         if (err) {
             if (err) {
