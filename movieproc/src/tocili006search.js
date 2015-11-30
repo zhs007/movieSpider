@@ -5,9 +5,9 @@ var async = require('async');
 var moviemgr = require('../common/moviemgr');
 
 function validStr(str) {
-    while (str.indexOf("'") >= 0) {
-        str = str.replace("'", "^");
-    }
+    //while (str.indexOf("'") >= 0) {
+    str = str.replace(/\'/g, "''");
+    //}
 
     return str;
 }
@@ -52,8 +52,22 @@ function add2Search(cname, callback) {
     });
 }
 
-function proc(next) {
-    let sql = "select * from movieinfo";
+function getExName(name, season) {
+    let s = '';
+    if (season >= 10) {
+        s = 'S' + season;
+    }
+    else {
+        s = 'S0' + season;
+    }
+
+    let begin = name.indexOf(s);
+
+    return name.slice(0, begin);
+}
+
+function procCili006SearchType2(next) {
+    let sql = "select * from cili006search where proc = 2";
     moviemgr.singleton.all(sql, function (err, row) {
         if (err) {
             console.log(util.format('all sql(%s) err is %j', sql, JSON.stringify(err)));
@@ -63,7 +77,9 @@ function proc(next) {
 
         if (row) {
             async.eachSeries(row, function (curline, callback) {
-                add2Search(curline.cname, function (id) {
+
+                let curname = curline.cname + 'E0';
+                add2Search(curname, function (id) {
                     callback();
                 });
 
@@ -72,7 +88,56 @@ function proc(next) {
             });
         }
     });
+}
 
+function procCili006(next) {
+    let sql = "select * from cili006";
+    moviemgr.singleton.all(sql, function (err, row) {
+        if (err) {
+            console.log(util.format('all sql(%s) err is %j', sql, JSON.stringify(err)));
+
+            return ;
+        }
+
+        if (row) {
+            let lstname = [];
+            async.eachSeries(row, function (curline, callback) {
+                if (curline.type == 1) {
+                    lstname.push(curline.cname);
+                    let ccn = validStr(getExName(curline.filename, curline.season));
+                    for (let ii = 1; ii <= curline.season; ++ii) {
+                        let s = '';
+                        if (ii >= 10) {
+                            s = 'S' + ii;
+                        }
+                        else {
+                            s = 'S0' + ii;
+                        }
+
+                        lstname.push(ccn + s);
+                    }
+                }
+
+                callback();
+            }, function (err) {
+                async.eachSeries(lstname, function (curname, callback) {
+                    add2Search(curname, function (id) {
+                        callback();
+                    });
+                }, function (err) {
+                    next();
+                })
+            });
+        }
+    });
+}
+
+function proc(next) {
+    procCili006(function () {
+        procCili006SearchType2(function () {
+            next();
+        });
+    });
 }
 
 exports.proc = proc;

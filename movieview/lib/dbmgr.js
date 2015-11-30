@@ -5,6 +5,13 @@ var mysql = require('mysql');
 var util = require('util');
 var log = require('./logger');
 
+var arrSafe = [
+    /\'/g,
+    /\"/g,
+    /\%/g,
+    /\*/g
+];
+
 const DBCONNECT_NO            = -1;   // 需要connect
 const DBCONNECT_CONNECTING    = 0;    // connect中
 const DBCONNECT_CONNECTED     = 1;    // connected
@@ -188,6 +195,14 @@ class DBClient{
 
     isValidResult(rows, name) {
         return typeof (rows) != 'undefined' && rows.length > 0 && rows[0].hasOwnProperty(name) && rows[0][name] !== null;
+    }
+
+    getSafeString(str) {
+        for (let ii = 0; ii < arrSafe.length; ++ii) {
+            str = str.replace(arrSafe[ii], '');
+        }
+
+        return str;
     }
 };
 

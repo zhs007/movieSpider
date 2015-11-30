@@ -39,8 +39,8 @@ class MovieDB:
         cur.execute(sql)
         res = cur.fetchall()
         cur.close()
-        print sql
-        print len(res)
+        #print sql
+        #print len(res)
         if len(res) > 0:
             return False
 
@@ -63,8 +63,8 @@ class MovieDB:
         cur.close()
         return res
 
-    def procMovie_cili006search(self, sid):
-        cur = self.conn.cursor()
-        sql = "update cili006search set proc = 1 where id = %d" % (sid)
-        cur.execute(sql)
-        cur.close()
+    def procMovie_cili006search(self, sid, val):
+        #cur = self.conn.cursor()
+        sql = "update cili006search set proc = %d where id = %d" % (val, sid)
+        self.conn.execute(sql)
+        self.conn.commit()
