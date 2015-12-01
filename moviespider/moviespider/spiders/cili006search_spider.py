@@ -47,5 +47,5 @@ class Cili006SearchSpider(Spider):
 
         if proc > 0:
             self.moviedb.procMovie_cili006search(response.request.cili006searchid, proc)
-            
+
         return items

@@ -21,9 +21,9 @@ function hasCN(str) {
 }
 
 function validStr(str) {
-    while (str.indexOf("'") >= 0) {
-        str = str.replace("'", "^");
-    }
+    //while (str.indexOf("'") >= 0) {
+    str = str.replace(/\'/g, "''");
+    //}
 
     return str;
 }
@@ -103,6 +103,8 @@ function proc(next) {
                 });
 
             }, function (err) {
+                console.log('cili006 ok!');
+
                 next();
             });
         }

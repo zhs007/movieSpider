@@ -68,3 +68,18 @@ class MovieDB:
         sql = "update cili006search set proc = %d where id = %d" % (val, sid)
         self.conn.execute(sql)
         self.conn.commit()
+
+    def getMovie_doubansearch(self):
+        cur = self.conn.cursor()
+        sql = "select cname, id from doubansearch where proc = 0"
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return res
+
+    def procMovie_doubansearch(self, sid, proc, doubanid):
+        #cur = self.conn.cursor()
+        #url1 = url1.replace("'", "''")
+        sql = "update doubansearch set proc = %d, doubanid = '%s' where id = %d" % (proc, doubanid, sid)
+        self.conn.execute(sql)
+        self.conn.commit()

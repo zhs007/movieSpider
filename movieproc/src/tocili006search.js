@@ -134,7 +134,9 @@ function procCili006(next) {
 
 function proc(next) {
     procCili006(function () {
+        console.log('cili006search cili006 ok!');
         procCili006SearchType2(function () {
+            console.log('cili006search type2 ok!');
             next();
         });
     });

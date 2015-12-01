@@ -5,9 +5,9 @@ var async = require('async');
 var moviemgr = require('../common/moviemgr');
 
 function validStr(str) {
-    while (str.indexOf("'") >= 0) {
-        str = str.replace("'", "^");
-    }
+    //while (str.indexOf("'") >= 0) {
+    str = str.replace(/\'/g, "''");
+    //}
 
     return str;
 }
@@ -43,6 +43,8 @@ function proc(next) {
                     });
                 });
             }, function (err) {
+                console.log('cili006ex ok!');
+
                 next();
             });
         }
