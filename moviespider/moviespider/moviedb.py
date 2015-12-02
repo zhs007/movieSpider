@@ -71,7 +71,7 @@ class MovieDB:
 
     def getMovie_doubansearch(self):
         cur = self.conn.cursor()
-        sql = "select cname, id from doubansearch where proc = 0"
+        sql = "select cname, id, nameex from doubansearch where proc = 0"
         cur.execute(sql)
         res = cur.fetchall()
         cur.close()
