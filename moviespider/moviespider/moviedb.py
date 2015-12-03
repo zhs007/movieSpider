@@ -83,3 +83,34 @@ class MovieDB:
         sql = "update doubansearch set proc = %d, doubanid = '%s' where id = %d" % (proc, doubanid, sid)
         self.conn.execute(sql)
         self.conn.commit()
+
+    def hasMovie_douban(self, doubanid):
+        cur = self.conn.cursor()
+        sql = "select dbid from doubanmovie where dbid = %s" % (doubanid)
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return len(res) > 0
+
+    def addMovie_douban(self, doubanid, cname):
+        if self.hasMovie_douban(doubanid):
+            return
+
+        cname = cname.replace("'", "''")
+        sql = "INSERT INTO doubanmovie(dbid, cname) values(%s, '%s')" % (doubanid, cname)
+        #print sql
+        self.conn.execute(sql)
+        self.conn.commit()
+
+    def getMovie_doubansearch2(self):
+        cur = self.conn.cursor()
+        sql = "select name, id from doubansearch2 where proc = 0"
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return res
+
+    def procMovie_doubansearch2(self, id, proc):
+        sql = "update doubansearch2 set proc = %d where id = %d" % (proc, id)
+        self.conn.execute(sql)
+        self.conn.commit()

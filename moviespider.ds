@@ -1,4 +1,50 @@
 
+typedef int MovieID;			// MovieID
+typedef int Season;				// 季，用于剧集
+
+// 电影类型
+enum MOVIETYPE{
+	MOVIETYPE_MOVIE = 1;		// 电影
+	MOVIETYPE_TV = 2;			// 剧集
+};
+
+// 电影信息
+struct MovieInfo{
+	primary MovieID movieid = AUTOINC(100000);	// MovieID
+
+	string(256) cname;							// 中文名
+	string(256) ename;							// 英文名
+
+	MOVIETYPE movietype;						// 影片类型
+
+	Season season;								// 季
+
+	string(256) doubanid;						// 豆瓣ID
+};
+
+// 电影名字信息，特别是翻译的电影，会有不同的常见名
+struct MovieName{
+	primary int id = AUTOINC;					// 名字ID
+
+	index MovieID movieid;						// MovieID
+	string(256) name;							// 名字
+};
+
+// 电影文件信息
+struct MovieFile{
+	primary int mfid = AUTOINC;					// 文件ID
+
+	string(256) filename;						// 文件名
+
+	string(1024) magnet = NULL;					// 磁力下载
+	string(1024) ed2k = NULL;					// 电驴下载
+
+	string(1024) url = NULL;					// 电驴下载
+
+	string(32) sitename;						// 站点名
+};
+
+
 // 豆瓣电影信息
 struct DBMovieInfo{
 	
