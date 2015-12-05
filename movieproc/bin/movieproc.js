@@ -11,8 +11,9 @@ var tomysql = require('../src/tomysql');
 var cili006ex = require('../src/cili006ex');
 var tocili006search = require('../src/tocili006search');
 var todoubansearch = require('../src/todoubansearch');
+var todoubanmovie = require('../src/todoubanmovie');
 
-var arr = [cili006, cili006ex, tocili006search, todoubansearch, tomysql];
+var arr = [cili006, cili006ex, tocili006search, todoubansearch, todoubanmovie];//, tomysql];
 
 moviemgr.init(function (isok) {
     dbmgr.newDBClient('movie', config.db_host, config.db_user, config.db_pwd, config.db_name, function () {

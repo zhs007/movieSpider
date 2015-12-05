@@ -102,6 +102,14 @@ class MovieDB:
         self.conn.execute(sql)
         self.conn.commit()
 
+    def getDoubanID_douban(self):
+        cur = self.conn.cursor()
+        sql = "select dbid from doubanmovie where proc = 0"
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return res
+
     def getMovie_doubansearch2(self):
         cur = self.conn.cursor()
         sql = "select name, id from doubansearch2 where proc = 0"
@@ -112,5 +120,10 @@ class MovieDB:
 
     def procMovie_doubansearch2(self, id, proc):
         sql = "update doubansearch2 set proc = %d where id = %d" % (proc, id)
+        self.conn.execute(sql)
+        self.conn.commit()
+
+    def updMovie_doubanmovie(self, doubanid, cname, img):
+        sql = "update doubanmovie set proc = 1, cname = '%s', img = '%s' where dbid = %d" % (cname, img, doubanid)
         self.conn.execute(sql)
         self.conn.commit()
