@@ -9,9 +9,9 @@ from moviespider.moviedb import MovieDB
 
 class Cili006Spider(Spider):
     name = "cili006"
-    allowed_domains = ["cili006.com"]
+    allowed_domains = ["cili007.com"]
     start_urls = [
-        "http://cili006.com/"
+        "http://cili007.com/"
     ]
 
     def parse(self, response):

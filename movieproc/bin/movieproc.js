@@ -14,7 +14,7 @@ var todoubansearch = require('../src/todoubansearch');
 var todoubanmovie = require('../src/todoubanmovie');
 var douban = require('../src/douban');
 
-var arr = [cili006, cili006ex, tocili006search, todoubansearch, todoubanmovie, douban, tomysql];
+var arr = [cili006, cili006ex, tocili006search, todoubansearch, todoubanmovie, douban];//, tomysql];
 
 moviemgr.init(function (isok) {
     dbmgr.newDBClient('movie', config.db_host, config.db_user, config.db_pwd, config.db_name, function () {

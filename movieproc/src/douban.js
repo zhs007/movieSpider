@@ -16,55 +16,94 @@ function validStr(str) {
     return str;
 }
 
+function getANumber(cc) {
+    let arr = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+    for (let jj = 0; jj < arr.length; ++jj) {
+        if (arr[jj] == cc) {
+            return jj + 1;
+        }
+    }
+
+    return -1;
+}
+
+function getNumber(str) {
+    let nums = 0;
+    let arr = ['一', '二', '三', '四', '五', '六', '七', '八', '九', '十'];
+    if (str.length == 3) {
+        if (str.charAt(1) != '十') {
+            return -1;
+        }
+        let c0 = getANumber(str.charAt(0));
+        let c1 = getANumber(str.charAt(2));
+        if (c0 == -1 || c1 == -1) {
+            return -1;
+        }
+
+        return c0 * 10 + c1;
+    }
+    else if (str.length == 2) {
+        if (str.charAt(0) == '十') {
+            let c0 = getANumber(str.charAt(1));
+            if (c0 == -1) {
+                return -1;
+            }
+
+            return 10 + c0;
+        }
+        else if (str.charAt(1) == '十') {
+            let c0 = getANumber(str.charAt(0));
+            if (c0 == -1) {
+                return -1;
+            }
+
+            return 10 * c0;
+        }
+
+        return -1;
+    }
+    else if (str.length == 1) {
+        let c0 = getANumber(str.charAt(0));
+        if (c0 == -1) {
+            return -1;
+        }
+
+        return c0;
+    }
+
+    return -1;
+}
+
+function getSeason(str) {
+    if (str.charAt(0) == '第' && str.charAt(str.length - 1) == '季') {
+        return getNumber(str.slice(1, str.length - 1));
+    }
+
+    return -1;
+}
+
 function procline(db, line) {
-    let name = line.cname.replace(/(豆瓣)/g, '');
-    if (isSE(line.filename)) {
-        let arr = line.filename.split('.');
-        let cname = '';
-        let engname = '';
-        let ii = 0;
-
-        for (; ii < arr.length; ++ii) {
-            if (!hasCN(arr[ii])) {
-                break ;
-            }
-
-            if (ii > 0) {
-                cname += '.';
-            }
-
-            cname += arr[ii];
-        }
-
-        let bii = ii;
-        for (; ii < arr.length; ++ii) {
-            if (isSE(arr[ii])) {
-                break ;
-            }
-
-            if (ii > bii) {
-                engname += ' ';
-            }
-
-            engname += arr[ii];
-        }
-
-        let s = parseInt(arr[ii].slice(1, 3));
-        let e = parseInt(arr[ii].slice(4));
-
-        let sql = util.format("update cili006 set cname = '%s', engname = '%s', season = %d, episode = %d, type = 1 where id = %d",
-            validStr(cname), validStr(engname), s, e, line.id);
-
-        //db.run(sql);
+    let name = line.cname.replace(/\(豆瓣\)/g, '');
+    name = name.trim();
+    let arr = name.split(/\s+/g);
+    if (arr.length == 1) {
+        let sql = util.format("update doubanmovie set name = '%s', proc = 2 where dbid = %d",
+            validStr(name), line.dbid);
 
         return sql;
     }
+    else if (arr.length == 2) {
+        name = arr[0];
+        let season = getSeason(arr[1]);
+        if (season > 0) {
+            let sql = util.format("update doubanmovie set name = '%s', season = %d, proc = 2 where dbid = %d",
+                validStr(name), season, line.dbid);
+
+            return sql;
+        }
+    }
 
     return undefined;
-}
-
-function procName() {
-
 }
 
 function proc(next) {
@@ -77,25 +116,25 @@ function proc(next) {
         }
 
         if (row) {
-            //let runsql = [];
-            //for (let i = 0; i < row.length; ++i) {
-            //    //console.log(util.format('row %d is %j', i, row[i]));
-            //    let cursql = procline(moviemgr.singleton, row[i]);
-            //    if (cursql != undefined) {
-            //        runsql.push(cursql);
-            //    }
-            //}
-            //
-            //async.eachSeries(runsql, function (cursql, callback) {
-            //    moviemgr.singleton.run(cursql, function () {
-            //        callback();
-            //    });
-            //
-            //}, function (err) {
-            //    console.log('cili006 ok!');
-            //
-            //    next();
-            //});
+            let runsql = [];
+            for (let i = 0; i < row.length; ++i) {
+                //console.log(util.format('row %d is %j', i, row[i]));
+                let cursql = procline(moviemgr.singleton, row[i]);
+                if (cursql != undefined) {
+                    runsql.push(cursql);
+                }
+            }
+
+            async.eachSeries(runsql, function (cursql, callback) {
+                moviemgr.singleton.run(cursql, function () {
+                    callback();
+                });
+
+            }, function (err) {
+                console.log('doubanmovie ok!');
+
+                next();
+            });
         }
     });
 }
