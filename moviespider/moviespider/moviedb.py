@@ -124,6 +124,7 @@ class MovieDB:
         self.conn.commit()
 
     def updMovie_doubanmovie(self, doubanid, cname, img):
+        cname = cname.replace("'", "''")
         sql = "update doubanmovie set proc = 1, cname = '%s', img = '%s' where dbid = %d" % (cname, img, doubanid)
         self.conn.execute(sql)
         self.conn.commit()
