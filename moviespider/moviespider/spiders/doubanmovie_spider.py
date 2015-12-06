@@ -37,4 +37,21 @@ class DoubanSearch2Spider(Spider):
 
         self.moviedb.updMovie_doubanmovie(response.request.doubanid, title, arr1[len(arr1) - 1])
 
+        arrinfo = sel.css('div#info')
+        for curinfo in arrinfo:
+            print 'info is ' + curinfo.extract()
+            bi = curinfo.extract().find(u'>又名:</span>');
+            if bi > 0:
+                tstr = curinfo.extract()[bi + len(u'>又名:</span>'):]
+                ei = tstr.find('<br>')
+                tsrt1 = tstr[0:ei].strip()
+                print 'other name is ' + tsrt1
+                tarr1 = tsrt1.split('/')
+                for t1 in tarr1:
+                    t1 = t1.strip()
+                    print 't1 is ' + t1
+                    self.moviedb.addMovieName_doubanmovie(response.request.doubanid, t1)
+
+            break
+
         return []

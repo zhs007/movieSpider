@@ -128,3 +128,20 @@ class MovieDB:
         sql = "update doubanmovie set proc = 1, cname = '%s', img = '%s' where dbid = %d" % (cname, img, doubanid)
         self.conn.execute(sql)
         self.conn.commit()
+
+    def hasMovieName_doubanmovie(self, doubanid, name):
+        cur = self.conn.cursor()
+        sql = "select id from doubanmoviename where dbid = %d and name = '%s'" % (doubanid, name)
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return len(res) > 0
+
+    def addMovieName_doubanmovie(self, doubanid, name):
+        if self.hasMovieName_doubanmovie(doubanid, name):
+            return
+
+        name = name.replace("'", "''")
+        sql = "insert into doubanmoviename(dbid, name) values(%d, '%s')" % (doubanid, name)
+        self.conn.execute(sql)
+        self.conn.commit()
