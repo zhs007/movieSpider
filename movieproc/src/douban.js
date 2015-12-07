@@ -106,7 +106,7 @@ function procline(db, line) {
     return undefined;
 }
 
-function proc(next) {
+function procDouban(next) {
     let sql = "select * from doubanmovie where proc = 1 order by dbid asc";
     moviemgr.singleton.all(sql, function (err, row) {
         if (err) {
@@ -136,6 +136,71 @@ function proc(next) {
                 next();
             });
         }
+    });
+}
+
+function proclineName(line) {
+    let name = line.name.replace(/\(豆瓣\)/g, '');
+    name = name.trim();
+    let arr = name.split(/\s+/g);
+    if (arr.length == 1) {
+        let sql = util.format("update doubanmoviename set rname = '%s', proc = 2 where id = %d",
+            validStr(name), line.id);
+
+        return sql;
+    }
+    else if (arr.length == 2) {
+        name = arr[0];
+        let season = getSeason(arr[1]);
+        if (season > 0) {
+            let sql = util.format("update doubanmoviename set rname = '%s', proc = 2 where id = %d",
+                validStr(name), line.id);
+
+            return sql;
+        }
+    }
+
+    return undefined;
+}
+
+function procDoubanName(next) {
+    let sql = "select * from doubanmoviename where proc = 0 order by id asc";
+    moviemgr.singleton.all(sql, function (err, row) {
+        if (err) {
+            console.log(util.format('all sql(%s) err is %j', sql, JSON.stringify(err)));
+
+            return ;
+        }
+
+        if (row) {
+            let runsql = [];
+            for (let i = 0; i < row.length; ++i) {
+                //console.log(util.format('row %d is %j', i, row[i]));
+                let cursql = proclineName(row[i]);
+                if (cursql != undefined) {
+                    runsql.push(cursql);
+                }
+            }
+
+            async.eachSeries(runsql, function (cursql, callback) {
+                moviemgr.singleton.run(cursql, function () {
+                    callback();
+                });
+
+            }, function (err) {
+                console.log('doubanmoviename ok!');
+
+                next();
+            });
+        }
+    });
+}
+
+function proc(next) {
+    procDouban(function () {
+        procDoubanName(function () {
+            next();
+        });
     });
 }
 
