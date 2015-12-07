@@ -145,3 +145,17 @@ class MovieDB:
         sql = "insert into doubanmoviename(dbid, name) values(%d, '%s')" % (doubanid, name)
         self.conn.execute(sql)
         self.conn.commit()
+
+    def getMovie_cili006douban(self):
+        cur = self.conn.cursor()
+        sql = "select name, dbid from doubanmovie where cili006 = 0"
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return res
+
+    def procMovie_cili006douban(self, sid, val):
+        #cur = self.conn.cursor()
+        sql = "update doubanmovie set cili006 = %d where dbid = %d" % (val, sid)
+        self.conn.execute(sql)
+        self.conn.commit()

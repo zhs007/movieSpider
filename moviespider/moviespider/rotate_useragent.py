@@ -33,7 +33,7 @@ class RotateUserAgentMiddleware(UserAgentMiddleware):
             request.headers.setdefault('Cache-Control', 'max-age=0')
             request.headers.setdefault('Upgrade-Insecure-Requests', '1')
             request.headers.setdefault('Accept', 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8')
-            request.headers.setdefault('Referer', 'http://www.douban.com/')
+            request.headers.setdefault('Referer', 'http://www.baidu.com/')
             request.headers.setdefault('Accept-Encoding', 'gzip, deflate, sdch')
             request.headers.setdefault('Accept-Language', 'zh,en-US;q=0.8,en;q=0.6')
   
