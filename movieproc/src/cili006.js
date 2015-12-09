@@ -12,6 +12,10 @@ function isSE(str) {
     return rSE.exec(str);
 }
 
+function getSE(str) {
+    return rSE.exec(str);
+}
+
 function isEp(str) {
     return rEp.exec(str);
 }
@@ -29,7 +33,8 @@ function validStr(str) {
 }
 
 function procline(db, line) {
-    if (isSE(line.filename)) {
+    let searr = getSE(line.filename);
+    if (searr != undefined && searr.length > 0) {
         let arr = line.filename.split('.');
         let cname = '';
         let engname = '';
@@ -60,8 +65,8 @@ function procline(db, line) {
             engname += arr[ii];
         }
 
-        let s = parseInt(arr[ii].slice(1, 3));
-        let e = parseInt(arr[ii].slice(4));
+        let s = parseInt(searr[0].slice(1, 3));
+        let e = parseInt(searr[0].slice(4));
 
         let sql = util.format("update cili006 set cname = '%s', engname = '%s', season = %d, episode = %d, type = 1 where id = %d",
             validStr(cname), validStr(engname), s, e, line.id);

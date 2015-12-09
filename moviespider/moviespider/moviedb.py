@@ -173,3 +173,11 @@ class MovieDB:
         sql = "update doubanmoviename set cili006 = %d where id = %d" % (val, sid)
         self.conn.execute(sql)
         self.conn.commit()
+
+    def hasMovie_cili006(self, id):
+        cur = self.conn.cursor()
+        sql = "select id from cili006 where id = %d" % (id)
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return len(res) > 0
