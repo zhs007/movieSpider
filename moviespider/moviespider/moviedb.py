@@ -212,3 +212,21 @@ class MovieDB:
         sql = "update dytt8 set name = '%s', proc = %d, downurl = '%s' where id = %d" % (name, proc, downurl, id)
         self.conn.execute(sql)
         self.conn.commit()
+
+    def hasMovie_6vhao(self, url):
+        cur = self.conn.cursor()
+        sql = "select id from 6vhao where url = '%s'" % (url)
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return len(res) > 0
+
+    def insMovie_6vhao(self, url, name):
+        if self.hasMovie_6vhao(url):
+            return
+
+        name = name.replace("'", "''")
+        url = url.replace("'", "''")
+        sql = "insert into 6vhao(url, name) values('%s', '%s')" % (url, name)
+        self.conn.execute(sql)
+        self.conn.commit()

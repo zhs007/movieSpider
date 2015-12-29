@@ -107,5 +107,42 @@ function getCili006Ex(name, callback) {
     });
 }
 
+// callback(lst)
+function getDytt8(callback) {
+    let lstdytt8 = [];
+    let movie = dbmgr.getDBClient('movie');
+    let sql = util.format("select * from dytt8 where order by id desc limit 0, 100");
+    movie.query(sql, function (err, rows, fields) {
+        if (err) {
+            callback(undefined);
+
+            return ;
+        }
+
+        if (movie.isValidResult(rows, 'id')) {
+            for (let ii = 0; ii < rows.length; ++ii) {
+                let cm = {};
+
+                cm.id = rows[ii].id;
+                cm.name = rows[ii].name;
+                cm.downurl = rows[ii].downurl;
+
+                cm.base64url = (new Buffer(cm.downurl)).toString('base64');
+
+                lstdytt8.push(cm);
+            }
+
+            callback(lstdytt8);
+
+            return ;
+        }
+
+        callback(undefined);
+
+        return ;
+    });
+}
+
 exports.getCili006 = getCili006;
 exports.getCili006Ex = getCili006Ex;
+exports.getDytt8 = getDytt8;

@@ -8,19 +8,22 @@ from moviespider.moviedb import MovieDB
 
 import scrapy
 
-class Dytt8List2Spider(Spider):
+class W6vhaoSpider(Spider):
     moviedb = MovieDB()
-    name = "dytt8list2"
-    allowed_domains = ["ygdy8.net"]
+    name = "w6vhao"
+    allowed_domains = ["6vhao.net"]
 
     def start_requests(self):
         lstreq = []
 
-        #baseurl = "http://www.ygdy8.net/html/gndy/dyzz/list_23_%d.html"
-        #max = 133
-        baseurl = "http://www.ygdy8.net/html/gndy/jddy/list_63_%d.html"
-        max = 102
-        for cur in range(1, max):
+        baseurl0 = "http://www.6vhao.com/dy/index.html"
+        req = scrapy.FormRequest(baseurl0, callback=self.search_parse)
+        lstreq.append(req)
+
+        baseurl = "http://www.6vhao.com/dy/index_%d.html"
+
+        max = 131
+        for cur in range(2, max):
             req = scrapy.FormRequest(baseurl % (cur), callback=self.search_parse)
             lstreq.append(req)
             #break
@@ -29,10 +32,10 @@ class Dytt8List2Spider(Spider):
     def search_parse(self, response):
         sel = Selector(response)
 
-        lst = sel.css('td[height="26"]>b')
+        lst = sel.css('ul.list')
         for cur in lst:
             #print "cur is %s" % (cur.extract())
-            cura = cur.xpath('./a/@href')[0].extract()
+            cura = cur.xpath('./li/a/@href')[1].extract()
             print "cur is %s" % (cura)
 
             tarr1 = cura.split('/')

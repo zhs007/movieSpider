@@ -1,0 +1,18 @@
+extends base
+
+block content
+  table.table.table-striped
+    thead
+      tr
+        th 电影名
+        th 下载
+        th 小米路由
+        th 豆瓣
+    tbody
+      - for (var i = 0; i < lstmovie.length; ++i) {
+      tr
+        td #{lstmovie[i].name}
+        td <a target="_blank" href="#{lstmovie[i].downurl}">下载</a>
+        td <a target="_blank" href="http://d.miwifi.com/d2r/?url=#{lstmovie[i].base64url}">下载到小米路由</a>
+        td <a target="_blank" href="http://www.douban.com/search?cat=1002&q=#{lstmovie[i].name}">去豆瓣看看</a>
+      -}  

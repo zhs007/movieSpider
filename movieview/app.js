@@ -10,6 +10,7 @@ var sessionmgr = require('./lib/sessionmgr');
 var routes = require('./routes/index');
 var users = require('./routes/users');
 var cili006 = require('./routes/cili006');
+var dytt8 = require('./routes/dytt8');
 var search = require('./routes/search');
 
 var app = express();
@@ -30,6 +31,7 @@ app.use(sessionmgr.funcMain);
 app.use('/', routes);
 app.use('/users', users);
 app.use('/cili006', cili006);
+app.use('/dytt8', dytt8);
 app.use('/search', search);
 
 // catch 404 and forward to error handler
