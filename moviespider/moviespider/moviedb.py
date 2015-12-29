@@ -215,7 +215,7 @@ class MovieDB:
 
     def hasMovie_6vhao(self, url):
         cur = self.conn.cursor()
-        sql = "select id from 6vhao where url = '%s'" % (url)
+        sql = "select id from `6vhao` where url = '%s'" % (url)
         cur.execute(sql)
         res = cur.fetchall()
         cur.close()
@@ -227,6 +227,6 @@ class MovieDB:
 
         name = name.replace("'", "''")
         url = url.replace("'", "''")
-        sql = "insert into 6vhao(url, name) values('%s', '%s')" % (url, name)
+        sql = "insert into `6vhao`(url, name) values('%s', '%s')" % (url, name)
         self.conn.execute(sql)
         self.conn.commit()

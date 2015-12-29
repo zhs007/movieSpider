@@ -111,7 +111,7 @@ function getCili006Ex(name, callback) {
 function getDytt8(callback) {
     let lstdytt8 = [];
     let movie = dbmgr.getDBClient('movie');
-    let sql = util.format("select * from dytt8 where order by id desc limit 0, 100");
+    let sql = util.format("select * from dytt8 order by id desc limit 0, 100");
     movie.query(sql, function (err, rows, fields) {
         if (err) {
             callback(undefined);
@@ -127,7 +127,8 @@ function getDytt8(callback) {
                 cm.name = rows[ii].name;
                 cm.downurl = rows[ii].downurl;
 
-                cm.base64url = (new Buffer(cm.downurl)).toString('base64');
+                let uri = encodeURI(cm.downurl);
+                cm.base64url = (new Buffer(uri)).toString('base64');
 
                 lstdytt8.push(cm);
             }
