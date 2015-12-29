@@ -181,3 +181,34 @@ class MovieDB:
         res = cur.fetchall()
         cur.close()
         return len(res) > 0
+
+    def hasMovie_dytt8(self, id):
+        cur = self.conn.cursor()
+        sql = "select id from dytt8 where id = %d" % (id)
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return len(res) > 0
+
+    def insMovie_dytt8(self, id, url, name):
+        if self.hasMovie_dytt8(id):
+            return
+
+        name = name.replace("'", "''")
+        url = url.replace("'", "''")
+        sql = "insert into dytt8(id, url, name) values(%d, '%s', '%s')" % (id, url, name)
+        self.conn.execute(sql)
+        self.conn.commit()
+
+    def getURL_dytt8(self):
+        cur = self.conn.cursor()
+        sql = "select id, url from dytt8 where proc = 0"
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return res
+
+    def updMovie_dytt8(self, id, name, downurl, proc):
+        sql = "update dytt8 set name = '%s', proc = %d, downurl = '%s' where id = %d" % (name, proc, downurl, id)
+        self.conn.execute(sql)
+        self.conn.commit()
