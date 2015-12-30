@@ -13,6 +13,7 @@ var cili006 = require('./routes/cili006');
 var cili006ex = require('./routes/cili006ex');
 var dytt8 = require('./routes/dytt8');
 var search = require('./routes/search');
+var commonfile = require('./routes/commonfile');
 
 var app = express();
 
@@ -35,6 +36,7 @@ app.use('/cili006', cili006);
 app.use('/cili006ex', cili006ex);
 app.use('/dytt8', dytt8);
 app.use('/search', search);
+app.use('/commonfile', commonfile);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

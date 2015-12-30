@@ -67,6 +67,57 @@ function getMaxID_dytt(callback) {
     });
 }
 
+function getMaxID_commonfile(callback) {
+    let movie = dbmgr.getDBClient('movie');
+    let sql = "select * from commonfile order by id desc limit 0, 1";
+    movie.query(sql, function (err, rows, fields) {
+        if (err) {
+            callback(0);
+
+            return ;
+        }
+
+        if (movie.isValidResult(rows, 'id')) {
+            //callback(0);
+            callback(rows[0].id);
+        }
+        else {
+            callback(0);
+        }
+    });
+}
+
+function procCommonFile(db, callback) {
+    getMaxID_commonfile(function (maxid) {
+        let sql = util.format("select * from commonfile where `index` >= %d and url like 'ed2k%' order by `index` asc", maxid);
+        db.all(sql, function (err, row) {
+            if (err) {
+                console.log(util.format('all sql(%s) err is %j', sql, JSON.stringify(err)));
+
+                return ;
+            }
+
+            if (row) {
+                let runsql = [];
+                for (let i = 0; i < row.length; ++i) {
+                    //console.log(util.format('row %d is %j', i, row[i]));
+                    let cursql = util.format("insert into commonfile(id, `url`, `filename`) values(%d, %s, %s)",
+                        row[i].index,
+                        getString(row[i].url),
+                        getString(row[i].name)
+                    );
+                    runsql.push(cursql);
+                }
+
+                let movie = dbmgr.getDBClient('movie');
+                movie.queryList(runsql, function () {
+                    callback();
+                });
+            }
+        });
+    });
+}
+
 function procDytt8(db, callback) {
     getMaxID_dytt(function (maxdyttid) {
         let sql = util.format("select * from dytt8 where id >= %d order by id asc", maxdyttid);
@@ -149,7 +200,9 @@ function proc(next) {
 
         procCili006(db, function () {
             procDytt8(db, function () {
-                next();
+                procCommonFile(db, function () {
+                    next();
+                });
             });
         });
     });

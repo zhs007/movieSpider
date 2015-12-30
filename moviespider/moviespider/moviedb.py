@@ -230,3 +230,34 @@ class MovieDB:
         sql = "insert into `6vhao`(url, name) values('%s', '%s')" % (url, name)
         self.conn.execute(sql)
         self.conn.commit()
+
+    def getURL_6vhao(self):
+        cur = self.conn.cursor()
+        sql = "select url from `6vhao` where proc = 0"
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return res
+
+    def updMovie_6vhao(self, url, proc):
+        sql = "update `6vhao` set proc = %d where url = '%s'" % (proc, url)
+        self.conn.execute(sql)
+        self.conn.commit()
+
+    def hasCommonFile(self, url):
+        cur = self.conn.cursor()
+        sql = "select * from `commonfile` where url = '%s'" % (url)
+        cur.execute(sql)
+        res = cur.fetchall()
+        cur.close()
+        return len(res) > 0
+
+    def insCommonFile(self, url, name):
+        if self.hasCommonFile(url):
+            return
+
+        name = name.replace("'", "''")
+        url = url.replace("'", "''")
+        sql = "insert into `commonfile`(url, name) values('%s', '%s')" % (url, name)
+        self.conn.execute(sql)
+        self.conn.commit()

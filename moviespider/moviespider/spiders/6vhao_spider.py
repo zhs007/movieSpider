@@ -32,13 +32,18 @@ class W6vhaoSpider(Spider):
     def search_parse(self, response):
         sel = Selector(response)
 
-        lst = sel.css('ul.list')
+        lst = sel.css('ul.list')[0].xpath('./li')
         for cur in lst:
-            #print "cur is %s" % (cur.extract())
-            cura = cur.xpath('./li/a/@href')[0].extract()
+            print "cur is %s" % (cur.extract())
+            cura = cur.xpath('./a/@href')[0].extract()
             print "cur is %s" % (cura)
 
-            curn = cur.xpath('./li/a/text()')[0].extract()
+            at = cur.xpath('./a/text()')
+            if len(at) > 0:
+                curn = cur.xpath('./a/text()')[0].extract()
+            else:
+                curn = cur.xpath('./a/font/text()')[0].extract()
+
             bt = curn.find(u'《')
             et = curn.find(u'》')
             if bt == -1 or et == -1:
