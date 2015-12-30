@@ -207,8 +207,8 @@ function getCommonFile(callback) {
                 cm.name = rows[ii].filename;
                 cm.url = rows[ii].url;
 
-                let uri = encodeURI(cm.url);
-                cm.base64url = (new Buffer(uri)).toString('base64');
+                //let uri = encodeURI(cm.url);
+                cm.base64url = (new Buffer(cm.url)).toString('base64');
 
                 lstdytt8.push(cm);
             }
