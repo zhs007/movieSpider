@@ -1,0 +1,27 @@
+extends base
+
+block content
+  form.form-horizontal
+    .form-group
+      label.col-sm-2.control-label(for='inputName') 名字
+      .col-sm-6
+        input#inputName.form-control(type='text', placeholder='名字')
+    .form-group
+      label.col-sm-2.control-label(for='inputEngName') 英文名
+      .col-sm-6
+        input#inputEngName.form-control(type='text', placeholder='英文名')
+    .form-group
+      label.col-sm-2.control-label(for='inputDoubanID') 豆瓣ID
+      .col-sm-6
+        input#inputDoubanID.form-control(type='text', placeholder='豆瓣ID', value='0')
+    .form-group
+      label.col-sm-2.control-label(for='inputSeason') 季
+      .col-sm-6
+        input#inputSeason.form-control(type='text', placeholder='季', value='0')
+    .form-group
+      label.col-sm-2.control-label(for='inputMovieType') 类型
+      .col-sm-6
+        input#inputMovieType.form-control(type='text', placeholder='类型', value='0')        
+    .form-group
+      .col-sm-offset-2.col-sm-6
+        button.btn.btn-default(type='button', onclick='addMovie()') 新增

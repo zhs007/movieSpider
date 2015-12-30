@@ -17,8 +17,8 @@ class Dytt8ProcSpider(Spider):
         lst = self.moviedb.getURL_dytt8()
         lstreq = []
         for cur in lst:
-            #req = scrapy.FormRequest("http://www.dytt8.net/%s" % (cur[1]), callback=self.search_parse)
-            req = scrapy.FormRequest("http://www.ygdy8.net/%s" % (cur[1]), callback=self.search_parse)
+            req = scrapy.FormRequest("http://www.dytt8.net/%s" % (cur[1]), callback=self.search_parse)
+            #req = scrapy.FormRequest("http://www.ygdy8.net/%s" % (cur[1]), callback=self.search_parse)
             req.__setattr__('dytt8id', cur[0])
             lstreq.append(req)
             #break

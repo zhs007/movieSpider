@@ -58,6 +58,7 @@ function getMaxID_dytt(callback) {
         }
 
         if (movie.isValidResult(rows, 'id')) {
+            //callback(0);
             callback(rows[0].id);
         }
         else {

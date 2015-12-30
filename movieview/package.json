@@ -16,6 +16,7 @@
     "async": "*",
     "mysql": "*",
     "winston": "*",
-    "jadecache": "*"
+    "jadecache": "*",
+    "zmysql": "*"
   }
 }
