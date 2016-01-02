@@ -20,6 +20,8 @@ class W6vhaoSpider(Spider):
         req = scrapy.FormRequest(baseurl0, callback=self.search_parse)
         lstreq.append(req)
 
+        return lstreq
+
         baseurl = "http://www.6vhao.com/dy/index_%d.html"
 
         max = 131
