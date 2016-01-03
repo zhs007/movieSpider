@@ -36,7 +36,7 @@ class W6vhaoProcSpider(Spider):
             url = cur.xpath('./@href')
             if len(url) > 0:
                 if url[0].extract().find('ed2k') == 0 or url[0].extract().find('ftp') == 0:
-                    print 'cur is %s' % (cur.extract())
+                    #print 'cur is %s' % (cur.extract())
                     proc = 1
                     self.moviedb.insCommonFile(url[0].extract(), cur.xpath('./text()')[0].extract())
 

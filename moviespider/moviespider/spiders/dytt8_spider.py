@@ -21,10 +21,10 @@ class Dytt8Spider(Spider):
         arrmovie = lstmovie[0].xpath('./ul/a/@href')
         items = []
         for curmovie in arrmovie:
-            print 'curmovie is ' + curmovie.extract()
+            #print 'curmovie is ' + curmovie.extract()
             tarr1 = curmovie.extract().split('/')
             tarr2 = tarr1[len(tarr1) - 1].split('.')
-            print 'curmovie id is ' + tarr2[0]
+            #print 'curmovie id is ' + tarr2[0]
 
             moviedb.insMovie_dytt8((int)(tarr2[0]), curmovie.extract(), '')
             #item = Cili006Item()

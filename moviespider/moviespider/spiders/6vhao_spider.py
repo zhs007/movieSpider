@@ -36,9 +36,9 @@ class W6vhaoSpider(Spider):
 
         lst = sel.css('ul.list')[0].xpath('./li')
         for cur in lst:
-            print "cur is %s" % (cur.extract())
+            #print "cur is %s" % (cur.extract())
             cura = cur.xpath('./a/@href')[0].extract()
-            print "cur is %s" % (cura)
+            #print "cur is %s" % (cura)
 
             at = cur.xpath('./a/text()')
             if len(at) > 0:
@@ -53,7 +53,7 @@ class W6vhaoSpider(Spider):
             else:
                 name = curn[(bt + 1):et]
 
-            print 'curmovie name is ' + name
+            #print 'curmovie name is ' + name
 
             self.moviedb.insMovie_6vhao(cura, name)
 

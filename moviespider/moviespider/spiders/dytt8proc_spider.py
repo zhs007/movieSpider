@@ -37,11 +37,11 @@ class Dytt8ProcSpider(Spider):
         else:
             name = title[(bt + 1):et]
 
-        print 'name is %s' % (name)
+        #print 'name is %s' % (name)
 
         main = sel.xpath('//td[@style="WORD-WRAP: break-word"]')[0]
         #main = sel.css('div#Zoom')[0]
-        print 'main is %s' % (main.extract())
+        #print 'main is %s' % (main.extract())
         main1 = main.xpath('./a/@href')
         if len(main1) >= 1:
             downurl = main1[0].extract()
@@ -64,7 +64,7 @@ class Dytt8ProcSpider(Spider):
                         else:
                             downurl = main.xpath('./font/a/@href')[0].extract()
 
-        print 'downurl is %s' % (downurl)
+        #print 'downurl is %s' % (downurl)
 
         self.moviedb.updMovie_dytt8(response.request.dytt8id, name, downurl, 1)
         #print 'downurl is %s' % (downurl[0].extract())
