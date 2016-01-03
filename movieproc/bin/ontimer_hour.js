@@ -10,4 +10,4 @@ shell.exec('scrapy crawl dytt8proc');
 shell.exec('scrapy crawl w6vhaoproc');
 
 shell.cd('../movieproc');
-shell.exec('node bin/movieproc.js');
+shell.exec('/root/.nvm/versions/node/v5.1.0/bin/node bin/movieproc.js');
