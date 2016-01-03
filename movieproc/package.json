@@ -34,7 +34,8 @@
   "dependencies": {
     "sqlite3": "*",
     "async": "*",
-    "mysql": "*"
+    "mysql": "*",
+    "shelljs": "*"
   },
   "license": "MIT",
   "readmeFilename": "README.md"

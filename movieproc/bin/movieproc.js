@@ -3,6 +3,7 @@
 var dbmgr = require('../lib/dbmgr');
 var config = require('../config');
 var async = require('async');
+var process = require('process');
 
 var moviemgr = require('../common/moviemgr');
 
@@ -25,6 +26,7 @@ moviemgr.init(function (isok) {
             });
         }, function (err) {
             console.log('OK!!!');
+            process.exit(0);
         });
     });
 });
