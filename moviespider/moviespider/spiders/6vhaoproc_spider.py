@@ -29,7 +29,7 @@ class W6vhaoProcSpider(Spider):
 
         print 'myparam is %s' % (response.request.w6vhaourl)
 
-        proc = 0
+        proc = 2
         main = sel.xpath('//a')
         for cur in main:
             #print 'cur is %s' % (cur.extract())
@@ -40,7 +40,7 @@ class W6vhaoProcSpider(Spider):
                     proc = 1
                     self.moviedb.insCommonFile(url[0].extract(), cur.xpath('./text()')[0].extract())
 
-        if proc == 1:
-            self.moviedb.updMovie_6vhao(response.request.w6vhaourl, 1)
+        #if proc == 1:
+        self.moviedb.updMovie_6vhao(response.request.w6vhaourl, proc)
 
         return []
