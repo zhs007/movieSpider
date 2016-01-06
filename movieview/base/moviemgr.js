@@ -111,7 +111,7 @@ function getCili006Ex(name, callback) {
 function getDytt8(callback) {
     let lstdytt8 = [];
     let movie = dbmgr.getDBClient('movie');
-    let sql = util.format("select * from dytt8 order by id desc limit 0, 100");
+    let sql = util.format("select * from dytt8 order by id desc limit 0, 999");
     movie.query(sql, function (err, rows, fields) {
         if (err) {
             callback(undefined);
@@ -148,7 +148,7 @@ function getDytt8(callback) {
 function getCili006File(callback) {
     lstCili006 = [];
     let movie = dbmgr.getDBClient('movie');
-    let sql = util.format("select * from cili006 order by id desc limit 0, 100");
+    let sql = util.format("select * from cili006 order by id desc limit 0, 999");
     movie.query(sql, function (err, rows, fields) {
         if (err) {
             callback(undefined);
