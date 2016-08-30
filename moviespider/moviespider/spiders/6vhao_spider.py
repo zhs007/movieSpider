@@ -53,7 +53,7 @@ class W6vhaoSpider(Spider):
             else:
                 name = curn[(bt + 1):et]
 
-            print 'curmovie name is ' + name
+            #print 'curmovie name is ' + name
 
             self.moviedb.insMovie_6vhao(cura, name)
 
