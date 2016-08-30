@@ -11,7 +11,7 @@ import scrapy
 class W6vhaoProcSpider(Spider):
     moviedb = MovieDB()
     name = "w6vhaoproc"
-    allowed_domains = ["6chao.com"]
+    allowed_domains = ["6vhao.com"]
 
     def start_requests(self):
         lst = self.moviedb.getURL_6vhao()

@@ -11,7 +11,7 @@ import scrapy
 class W6vhaoSpider(Spider):
     moviedb = MovieDB()
     name = "w6vhao"
-    allowed_domains = ["6vhao.net"]
+    allowed_domains = ["6vhao.com"]
 
     def start_requests(self):
         lstreq = []
@@ -20,11 +20,11 @@ class W6vhaoSpider(Spider):
         req = scrapy.FormRequest(baseurl0, callback=self.search_parse)
         lstreq.append(req)
 
-        return lstreq
+        #return lstreq
 
         baseurl = "http://www.6vhao.com/dy/index_%d.html"
 
-        max = 131
+        max = 152
         for cur in range(2, max):
             req = scrapy.FormRequest(baseurl % (cur), callback=self.search_parse)
             lstreq.append(req)
@@ -53,7 +53,7 @@ class W6vhaoSpider(Spider):
             else:
                 name = curn[(bt + 1):et]
 
-            #print 'curmovie name is ' + name
+            print 'curmovie name is ' + name
 
             self.moviedb.insMovie_6vhao(cura, name)
 
