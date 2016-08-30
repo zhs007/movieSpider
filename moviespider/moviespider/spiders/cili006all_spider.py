@@ -11,7 +11,7 @@ import scrapy
 class Cili006AllSpider(Spider):
     moviedb = MovieDB()
     name = "cili006all"
-    allowed_domains = ["cili007.com"]
+    allowed_domains = ["cili06.com"]
     maxid = 103627
 
     def start_requests(self):
