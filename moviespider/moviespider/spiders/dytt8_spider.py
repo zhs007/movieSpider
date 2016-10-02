@@ -23,7 +23,7 @@ class Dytt8Spider(Spider):
         procnums = 0
         for curmovie in arrmovie:
             procnums = procnums + 1
-            print 'dytt8 proc ' + procnums
+            print 'dytt8 proc ' + str(procnums)
             #print 'curmovie is ' + curmovie.extract()
             tarr1 = curmovie.extract().split('/')
             tarr2 = tarr1[len(tarr1) - 1].split('.')
