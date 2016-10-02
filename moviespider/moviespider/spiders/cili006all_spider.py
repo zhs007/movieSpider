@@ -11,14 +11,14 @@ import scrapy
 class Cili006AllSpider(Spider):
     moviedb = MovieDB()
     name = "cili006all"
-    allowed_domains = ["cili06.com"]
+    allowed_domains = ["cili09.com"]
     maxid = 103627
 
     def start_requests(self):
         lstreq = []
         for cur in range(31, self.maxid + 1)[::-1]:
             if not self.moviedb.hasMovie_cili006(cur):
-                req = scrapy.FormRequest("http://cili06.com/%d.html" % (cur), callback=self.parse)
+                req = scrapy.FormRequest("http://cili09.com/%d.html" % (cur), callback=self.parse)
                 req.__setattr__('cili006searchid', cur)
                 lstreq.append(req)
 
