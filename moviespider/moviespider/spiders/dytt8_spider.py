@@ -20,7 +20,10 @@ class Dytt8Spider(Spider):
         lstmovie = sel.css('div.co_content2')
         arrmovie = lstmovie[0].xpath('./ul/a/@href')
         items = []
+        procnums = 0
         for curmovie in arrmovie:
+            procnums = procnums + 1
+            print 'dytt8 proc ' + procnums
             #print 'curmovie is ' + curmovie.extract()
             tarr1 = curmovie.extract().split('/')
             tarr2 = tarr1[len(tarr1) - 1].split('.')
