@@ -19,7 +19,10 @@ class Cili006Spider(Spider):
         sel = Selector(response)
         arrmovie = sel.xpath('/html/body/div[@class="middle-box"]/div[@class="w"]/dl[@class="list-item"]/dd')
         items = []
+        procnums = 0
         for curmovie in arrmovie:
+            procnums = procnums + 1
+            print 'cili006 proc ' + str(procnums)
             #print 'curmovie is ' + curmovie.extract()
             item = Cili006Item()
             item['magnet'] = curmovie.xpath('./@magnet')[0].extract()
